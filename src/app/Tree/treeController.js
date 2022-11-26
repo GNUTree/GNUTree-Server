@@ -11,6 +11,9 @@ const regexEmail = require("regex-email");
  * [GET] /trees/:userId
  */
 exports.getDecorations = async function (req, res) {
+  /**
+   * Path Variable: userId
+   */
   const { userId } = req.params;
   const userEmail = userId + "@gnu.ac.kr";
 

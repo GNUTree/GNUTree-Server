@@ -1,13 +1,13 @@
 // 전체 장식품 조회
-async function selectDecorations(connection, treeIdx) {
+async function selectDecorations(connection, userIdx) {
   const selectDecorationListQuery = `
                 SELECT nickname, imageUrl
                   FROM Decoration
-                 WHERE treeIdx = ? AND status = "NORMAL";
+                 WHERE userIdx = ? AND status = "NORMAL";
                 `;
   const [decorationListRow] = await connection.query(
     selectDecorationListQuery,
-    treeIdx
+    userIdx
   );
 
   return decorationListRow;
@@ -24,20 +24,7 @@ async function selectUserIdx(connection, userEmail) {
   return userIdxRow[0];
 }
 
-async function selectTreeIdx(connection, userIdx) {
-  const selectTreeIdxQuery = `
-                SELECT Tree.idx
-                  FROM Tree
-                  JOIN User
-                    ON Tree.idx = ?
-                `;
-  const [treeIdxRow] = await connection.query(selectTreeIdxQuery, userIdx);
-
-  return treeIdxRow[0];
-}
-
 module.exports = {
   selectDecorations,
   selectUserIdx,
-  selectTreeIdx,
 };

@@ -13,14 +13,9 @@ exports.retrieveDecorationList = async function (userEmail) {
     return errResponse(baseResponse.TREE_USEREMAIL_NOT_EXIST);
   }
 
-  const treeIdx = await treeDao.selectTreeIdx(connection, userIdx.idx);
-  if (!treeIdx) {
-    return errResponse(baseResponse.TREE_USERTREE_NOT_EXIST);
-  }
-
   const decorationList = await treeDao.selectDecorations(
     connection,
-    treeIdx.idx
+    userIdx.idx
   );
   connection.release();
   return response(baseResponse.SUCCESS, decorationList);
