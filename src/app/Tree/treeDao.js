@@ -3,7 +3,7 @@ async function selectDecorations(connection, treeIdx) {
   const selectDecorationListQuery = `
                 SELECT nickname, imageUrl
                   FROM Decoration
-                 WHERE treeIdx = ?;
+                 WHERE treeIdx = ? AND status = "NORMAL";
                 `;
   const [decorationListRow] = await connection.query(
     selectDecorationListQuery,
