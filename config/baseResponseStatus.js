@@ -18,24 +18,34 @@ module.exports = {
     code: 200,
     message: "JWT 토큰 검증 성공",
   },
-
-  // Request error
-  TREE_USERID_EMPTY: {
+  USERID_EMPTY: {
     isSuccess: false,
     code: 400,
     message: "userId를 입력해주세요.",
   },
-
-  TREE_USEREMAIL_NOT_EXIST: {
+  USEREMAIL_NOT_EXIST: {
     isSuccess: false,
     code: 400,
     message: "해당 유저가 존재하지 않습니다.",
   },
 
-  TREE_USERTREE_NOT_EXIST: {
+  // Request error
+  DECORATION_IMAGEIDX_EMPTY: {
     isSuccess: false,
     code: 400,
-    message: "해당 트리가 존재하지 않습니다.",
+    message: "imageIdx를 입력해주세요.",
+  },
+
+  DECORATION_NICKNAME_EMPTY: {
+    isSuccess: false,
+    code: 400,
+    message: "nickname을 입력해주세요.",
+  },
+
+  DECORATION_MESSAGE_EMPTY: {
+    isSuccess: false,
+    code: 400,
+    message: "message를 입력해주세요.",
   },
 
   // Response error

@@ -73,7 +73,7 @@ exports.getUserById = async function (req, res) {
    */
   const userId = req.params.userId;
 
-  if (!userId) return res.send(errResponse(baseResponse.USER_USERID_EMPTY));
+  if (!userId) return res.send(errResponse(baseResponse.USERID_EMPTY));
 
   const userByUserId = await userProvider.retrieveUser(userId);
   return res.send(response(baseResponse.SUCCESS, userByUserId));

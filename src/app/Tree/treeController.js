@@ -14,15 +14,41 @@ exports.getDecorations = async function (req, res) {
   /**
    * Path Variable: userId
    */
-  const { userId } = req.params;
-  const userEmail = userId + "@gnu.ac.kr";
+  const userIdx = req.userIdx;
 
-  if (!userId) {
-    return res.send(errResponse(baseResponse.TREE_USERID_EMPTY));
-  }
   const decorationListResult = await treeProvider.retrieveDecorationList(
-    userEmail
+    userIdx
   );
 
   return res.send(decorationListResult);
+};
+
+/**
+ * API NAME : 장식품 생성 API
+ * [POST] /trees/:userId/decoration
+ */
+exports.postDecoration = async function (req, res) {
+  /**
+   * Body: imageIdx, nickname, message
+   * Path Variable: userId
+   */
+  const { imageIdx, nickname, message } = req.body;
+  const userIdx = req.userIdx;
+
+  if (!imageIdx) {
+    return res.send(errResponse(baseResponse.DECORATION_IMAGEIDX_EMPTY));
+  } else if (!nickname) {
+    return res.send(errResponse(baseResponse.DECORATION_NICKNAME_EMPTY));
+  } else if (!message) {
+    return res.send(errResponse(baseResponse.DECORATION_MESSAGE_EMPTY));
+  }
+
+  const postDecorationResponse = await treeService.postDecoration(
+    imageIdx,
+    nickname,
+    message,
+    userIdx
+  );
+
+  return postDecorationResponse;
 };
