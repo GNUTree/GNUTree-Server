@@ -43,12 +43,31 @@ exports.postDecoration = async function (req, res) {
     return res.send(errResponse(baseResponse.DECORATION_MESSAGE_EMPTY));
   }
 
+  //TODO: imageIdx -> ImageUrl 변경 로직 표직
+  const imageUrl = imageIdx;
+
   const postDecorationResponse = await treeService.postDecoration(
-    imageIdx,
+    imageUrl,
     nickname,
     message,
     userIdx
   );
+  return res.send(postDecorationResponse);
+};
 
-  return postDecorationResponse;
+/**
+ * API NAME : 장식품 삭제 API
+ * [DELETE] /trees/:userId/decoration/:decorationIdx
+ */
+exports.deleteDecoration = async function (req, res) {
+  /**
+   * Path Variable: userId, decorationIdx
+   */
+  const { decorationIdx } = req.params;
+
+  const deleteDecorationResponse = await treeService.deleteDecoration(
+    parseInt(decorationIdx)
+  );
+
+  return res.send(deleteDecorationResponse);
 };

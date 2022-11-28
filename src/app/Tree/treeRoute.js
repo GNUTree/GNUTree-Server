@@ -8,4 +8,11 @@ module.exports = function (app) {
 
   // 장식품 생성 API
   app.post("/trees/:userId/decoration", checkEmail, tree.postDecoration);
+
+  // 장식품 삭제 API
+  app.delete(
+    "/trees/:userId/decoration/:decorationIdx",
+    checkEmail,
+    tree.deleteDecoration
+  );
 };
