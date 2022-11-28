@@ -48,6 +48,18 @@ module.exports = {
     message: "message를 입력해주세요.",
   },
 
+  DECORATION_DECORATIONIDX_EMPTY: {
+    isSuccess: false,
+    code: 400,
+    message: "decorationIdx를 입력해주세요.",
+  },
+
+  DECORATION_NOT_EXIST: {
+    isSuccess: false,
+    code: 400,
+    message: "해당 장식품이 존재하지 않습니다.",
+  },
+
   // Response error
 
   // Connection, Transaction 등의 서버 오류

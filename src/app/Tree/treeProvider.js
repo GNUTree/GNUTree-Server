@@ -14,3 +14,16 @@ exports.retrieveDecorationList = async function (userIdx) {
 
   return response(baseResponse.SUCCESS, decorationList);
 };
+
+exports.decorationCheck = async function (decorationIdx) {
+  const connection = await pool.getConnection(async (conn) => conn);
+
+  const decorationRow = await treeDao.selectDecoration(
+    connection,
+    decorationIdx
+  );
+
+  connection.release();
+
+  return decorationRow;
+};

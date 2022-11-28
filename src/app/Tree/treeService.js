@@ -5,6 +5,7 @@ const treeProvider = require("./treeProvider");
 const treeDao = require("./treeDao");
 const baseResponse = require("../../../config/baseResponseStatus");
 const { response, errResponse } = require("../../../config/response");
+const res = require("express/lib/response");
 
 exports.postDecoration = async function (imageUrl, nickname, message, userIdx) {
   const connection = await pool.getConnection(async (conn) => conn);
@@ -29,6 +30,11 @@ exports.postDecoration = async function (imageUrl, nickname, message, userIdx) {
 exports.deleteDecoration = async function (decorationIdx) {
   const connection = await pool.getConnection(async (conn) => conn);
   try {
+    const isExistDecoration = await treeProvider.decorationCheck(decorationIdx);
+    if (!isExistDecoration) {
+      return errResponse(baseResponse.DECORATION_NOT_EXIST);
+    }
+
     await connection.beginTransaction();
     const deleteDecorationResult = await treeDao.deleteDecoration(
       connection,

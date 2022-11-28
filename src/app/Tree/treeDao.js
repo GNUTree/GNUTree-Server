@@ -51,8 +51,23 @@ async function deleteDecoration(connection, decorationIdx) {
   return deleteDecorationRow[0];
 }
 
+async function selectDecoration(connection, decorationIdx) {
+  const selectDecorationQuery = `
+                SELECT idx
+                FROM Decoration
+                WHERE idx = ?
+                `;
+  const [decorationRow] = await connection.query(
+    selectDecorationQuery,
+    decorationIdx
+  );
+
+  return decorationRow[0] ? true : false;
+}
+
 module.exports = {
   selectDecorations,
+  selectDecoration,
   selectUserIdx,
   insertDecoration,
   deleteDecoration,

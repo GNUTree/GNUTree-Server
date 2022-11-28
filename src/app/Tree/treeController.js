@@ -56,6 +56,15 @@ exports.postDecoration = async function (req, res) {
 };
 
 /**
+ * API NAME : 장식품 상세 조회 API
+ * [GET] /trees/:userId/decoration/:decorationIdx
+ */
+exports.getDecoration = async function (req, res) {
+  /**
+   * Path Variable: userId, decorationIdx
+   */
+};
+/**
  * API NAME : 장식품 삭제 API
  * [DELETE] /trees/:userId/decoration/:decorationIdx
  */
@@ -64,6 +73,9 @@ exports.deleteDecoration = async function (req, res) {
    * Path Variable: userId, decorationIdx
    */
   const { decorationIdx } = req.params;
+
+  if (!decorationIdx)
+    return res.send(errResponse(baseResponse.DECORATION_DECORATIONIDX_EMPTY));
 
   const deleteDecorationResponse = await treeService.deleteDecoration(
     parseInt(decorationIdx)
