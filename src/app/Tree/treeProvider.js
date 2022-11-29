@@ -15,10 +15,24 @@ exports.retrieveDecorationList = async function (userIdx) {
   return response(baseResponse.SUCCESS, decorationList);
 };
 
+exports.retrieveDecoration = async function (decorationIdx) {
+  const connection = await pool.getConnection(async (conn) => conn);
+
+  const decoration = await treeDao.selectDecoration(connection, decorationIdx);
+
+  connection.release();
+
+  if (decoration.length == 0) {
+    return errResponse(baseResponse.DECORATION_NOT_EXIST);
+  }
+
+  return response(baseResponse.SUCCESS, decoration);
+};
+
 exports.decorationCheck = async function (decorationIdx) {
   const connection = await pool.getConnection(async (conn) => conn);
 
-  const decorationRow = await treeDao.selectDecoration(
+  const decorationRow = await treeDao.existDecoration(
     connection,
     decorationIdx
   );

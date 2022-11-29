@@ -63,6 +63,14 @@ exports.getDecoration = async function (req, res) {
   /**
    * Path Variable: userId, decorationIdx
    */
+  const { decorationIdx } = req.params;
+
+  if (!decorationIdx)
+    return res.send(errResponse(baseResponse.DECORATION_DECORATIONIDX_EMPTY));
+
+  const decorationResult = await treeProvider.retrieveDecoration(decorationIdx);
+
+  return res.send(decorationResult);
 };
 /**
  * API NAME : 장식품 삭제 API

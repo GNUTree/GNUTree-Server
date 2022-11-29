@@ -13,6 +13,20 @@ async function selectDecorations(connection, userIdx) {
   return decorationListRow;
 }
 
+async function selectDecoration(connection, decorationIdx) {
+  const selectDecorationQuery = `
+                SELECT idx, nickname, imageUrl, message
+                  FROM Decoration
+                 WHERE idx = ? AND status = "NORMAL";
+                `;
+  const [decorationListRow] = await connection.query(
+    selectDecorationQuery,
+    decorationIdx
+  );
+
+  return decorationListRow;
+}
+
 async function selectUserIdx(connection, userEmail) {
   const selectUserIdxQuery = `
                 SELECT idx
@@ -51,14 +65,14 @@ async function deleteDecoration(connection, decorationIdx) {
   return deleteDecorationRow[0];
 }
 
-async function selectDecoration(connection, decorationIdx) {
-  const selectDecorationQuery = `
+async function existDecoration(connection, decorationIdx) {
+  const existDecorationQuery = `
                 SELECT idx
                 FROM Decoration
                 WHERE idx = ?
                 `;
   const [decorationRow] = await connection.query(
-    selectDecorationQuery,
+    existDecorationQuery,
     decorationIdx
   );
 
@@ -71,4 +85,5 @@ module.exports = {
   selectUserIdx,
   insertDecoration,
   deleteDecoration,
+  existDecoration,
 };
