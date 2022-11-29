@@ -5,7 +5,6 @@ const treeProvider = require("./treeProvider");
 const treeDao = require("./treeDao");
 const baseResponse = require("../../../config/baseResponseStatus");
 const { response, errResponse } = require("../../../config/response");
-const res = require("express/lib/response");
 
 exports.postDecoration = async function (imageUrl, nickname, message, userIdx) {
   const connection = await pool.getConnection(async (conn) => conn);

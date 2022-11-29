@@ -18,6 +18,23 @@ module.exports = {
     code: 200,
     message: "JWT 토큰 검증 성공",
   },
+
+  SIGNUP_EMAIL_EMPTY: {
+    isSuccess: false,
+    code: 400,
+    message: "이메일을 입력해주세요.",
+  },
+  SIGNUP_EMAIL_ERROR_TYPE: {
+    isSuccess: false,
+    code: 400,
+    message: "이메일을 형식을 정확하게 입력해주세요.",
+  },
+  SIGNUP_REDUNDANT_EMAIL: {
+    isSuccess: false,
+    code: 400,
+    message: "이미 가입 처리된 이메일입니다.",
+  },
+
   USERID_EMPTY: {
     isSuccess: false,
     code: 400,
@@ -39,13 +56,13 @@ module.exports = {
   DECORATION_NICKNAME_EMPTY: {
     isSuccess: false,
     code: 400,
-    message: "nickname을 입력해주세요.",
+    message: "닉네임을 입력해주세요.",
   },
 
   DECORATION_MESSAGE_EMPTY: {
     isSuccess: false,
     code: 400,
-    message: "message를 입력해주세요.",
+    message: "메세지를 입력해주세요.",
   },
 
   DECORATION_DECORATIONIDX_EMPTY: {
@@ -64,5 +81,10 @@ module.exports = {
 
   // Connection, Transaction 등의 서버 오류
   DB_ERROR: { isSuccess: false, code: 500, message: "데이터 베이스 에러" },
+  NODEMAILER_ERROR: {
+    isSuccess: false,
+    code: 500,
+    message: "이메일 전송 모듈 에러",
+  },
   SERVER_ERROR: { isSuccess: false, code: 500, message: "서버 에러" },
 };
