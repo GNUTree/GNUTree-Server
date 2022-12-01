@@ -20,7 +20,7 @@ const checkEmail = async (req, res, next) => {
   connection.release();
 
   if (!userIdx) {
-    return errResponse(baseResponse.USEREMAIL_NOT_EXIST);
+    return res.send(errResponse(baseResponse.USEREMAIL_NOT_EXIST));
   }
 
   req.userIdx = userIdx.idx;

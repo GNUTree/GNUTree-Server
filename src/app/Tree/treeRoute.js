@@ -7,7 +7,12 @@ module.exports = function (app) {
   app.get("/trees/:userId", checkEmail, tree.getDecorations);
 
   // 장식품 생성 API
-  app.post("/trees/:userId/decoration", checkEmail, tree.postDecoration);
+  app.post(
+    "/trees/:userId/decoration",
+    jwtMiddleware,
+    checkEmail,
+    tree.postDecoration
+  );
 
   // 장식품 상세 조회 API
   app.get(

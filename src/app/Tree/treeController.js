@@ -30,8 +30,10 @@ exports.getDecorations = async function (req, res) {
 exports.postDecoration = async function (req, res) {
   /**
    * Body: imageIdx, nickname, message
+   * jwt: userIdx
    * Path Variable: userId
    */
+
   const { imageIdx, nickname, message } = req.body;
   const userIdx = req.userIdx;
 
