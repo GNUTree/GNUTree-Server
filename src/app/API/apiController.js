@@ -24,5 +24,38 @@ exports.sendEmail = async function (req, res) {
 
   const sendEmailResponse = await apiService.sendEmail(email);
 
-  return res.send(sendEmailResponse);
+  // cookie에 암호화 된 인증번호 저장
+  res.cookie("hashAuth", sendEmailResponse[1], {
+    maxAge: 300000,
+  });
+
+  return res.send(sendEmailResponse[0]);
+};
+
+/**
+ * API Name : 이메일 인증번호 확인 API
+ * [POST] /api/send-email/check
+ */
+exports.checkHashAuth = async function (req, res) {
+  /**
+   * Body: authenticationNumber
+   * Cookie: hashAuth
+   */
+  const { authenticationNumber } = req.body;
+  const hashAuth = req.cookies.hashAuth;
+
+  // 인증시간 만료 여부 체크
+  if (!hashAuth)
+    return res.send(response(baseResponse.SIGNUP_EMAIL_AUTH_EXPIRE));
+
+  // 빈 값 체크
+  if (!authenticationNumber)
+    return res.send(response(baseResponse.SIGNUP_AUTH_EMPTY));
+
+  const checkHashAuthResponse = await apiService.checkHashAuth(
+    hashAuth,
+    authenticationNumber
+  );
+
+  return res.send(checkHashAuthResponse);
 };

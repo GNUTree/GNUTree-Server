@@ -34,6 +34,31 @@ module.exports = {
     code: 400,
     message: "이미 가입 처리된 이메일입니다.",
   },
+  SIGNUP_EMAIL_AUTH_EXPIRE: {
+    isSuccess: false,
+    code: 400,
+    message: "인증번호 유효 시간이 만료되었습니다.",
+  },
+  SIGNUP_AUTH_VERIFICATION_FAILURE: {
+    isSuccess: false,
+    code: 400,
+    message: "인증번호가 일치하지 않습니다.",
+  },
+  SIGNUP_PASSWORD_EMPTY: {
+    isSuccess: false,
+    code: 400,
+    message: "패스워드를 입력해주세요.",
+  },
+  SIGNUP_NICKNAME_EMPTY: {
+    isSuccess: false,
+    code: 400,
+    message: "닉네임을 입력해주세요.",
+  },
+  SIGNUP_AUTH_EMPTY: {
+    isSuccess: false,
+    code: 400,
+    message: "인증번호를 입력해주세요.",
+  },
 
   USERID_EMPTY: {
     isSuccess: false,
@@ -85,6 +110,11 @@ module.exports = {
     isSuccess: false,
     code: 500,
     message: "이메일 전송 모듈 에러",
+  },
+  BCRYPT_ERROR: {
+    isSuccess: false,
+    code: 500,
+    message: "암호화 모듈 에러",
   },
   SERVER_ERROR: { isSuccess: false, code: 500, message: "서버 에러" },
 };

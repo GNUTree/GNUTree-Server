@@ -8,18 +8,18 @@ const regexEmail = require("regex-email");
 const { emit } = require("nodemon");
 
 /**
- * API No. 1
  * API Name : 유저 생성 (회원가입) API
- * [POST] /app/users
+ * [POST] /sign-up
  */
-exports.postUsers = async function (req, res) {
+exports.postSignUp = async function (req, res) {
   /**
-   * Body: email, password, nickname
+   * Body: password, nickname, authenticationNumber
    */
-  const { email, password, nickname } = req.body;
+  const { nickname, password } = req.body;
 
   // 빈 값 체크
-  if (!email) return res.send(response(baseResponse.SIGNUP_EMAIL_EMPTY));
+  if (!password) return res.send(response(baseResponse.SIGNUP_PASSWORD_EMPTY));
+  if (!nickname) return res.send(response(baseResponse.SIGNUP_NICKNAME_EMPTY));
 
   // 길이 체크
   if (email.length > 30)
