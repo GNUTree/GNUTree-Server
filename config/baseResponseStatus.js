@@ -60,6 +60,37 @@ module.exports = {
     message: "인증번호를 입력해주세요.",
   },
 
+  SIGNIN_EMAIL_EMPTY: {
+    isSuccess: false,
+    code: 400,
+    message: "이메일을 입력해주세요.",
+  },
+  SIGNIN_PASSWORD_EMPTY: {
+    isSuccess: false,
+    code: 400,
+    message: "패스워드를 입력해주세요.",
+  },
+  SIGNIN_EMAIL_WRONG: {
+    isSuccess: "false",
+    code: 400,
+    message: "존재하지 않는 이메일입니다.",
+  },
+  SIGNIN_PASSWORD_WRONG: {
+    isSuccess: "false",
+    code: 400,
+    message: "패스워드가 틀립니다.",
+  },
+  SIGNIN_BANNED_ACCOUNT: {
+    isSuccess: "false",
+    code: 400,
+    message: "관리자에 의해 차단된 계정입니다.",
+  },
+  SIGNIN_WITHDRAWAL_ACCOUNT: {
+    isSuccess: "false",
+    code: 400,
+    message: "탈퇴한 계정입니다.",
+  },
+
   USERID_EMPTY: {
     isSuccess: false,
     code: 400,

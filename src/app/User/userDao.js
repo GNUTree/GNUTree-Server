@@ -8,11 +8,11 @@ async function selectUser(connection) {
   return userRows;
 }
 
-// 이메일로 회원 조회
+// 이메일로 상세 회원 조회
 async function selectUserEmail(connection, email) {
   const selectUserEmailQuery = `
-                SELECT email, nickname 
-                FROM UserInfo 
+                SELECT idx, status, email, nickname, password
+                FROM User
                 WHERE email = ?;
                 `;
   const [emailRows] = await connection.query(selectUserEmailQuery, email);
@@ -31,17 +31,17 @@ async function selectUserId(connection, userId) {
 }
 
 // 유저 생성
-async function insertUserInfo(connection, insertUserInfoParams) {
+async function insertUser(connection, insertUserParams) {
   const insertUserInfoQuery = `
-        INSERT INTO UserInfo(email, password, nickname)
+        INSERT INTO User(email, nickname, password)
         VALUES (?, ?, ?);
     `;
-  const insertUserInfoRow = await connection.query(
+  const insertUserRow = await connection.query(
     insertUserInfoQuery,
-    insertUserInfoParams
+    insertUserParams
   );
 
-  return insertUserInfoRow;
+  return insertUserRow;
 }
 
 // 패스워드 체크
@@ -84,7 +84,7 @@ module.exports = {
   selectUser,
   selectUserEmail,
   selectUserId,
-  insertUserInfo,
+  insertUser,
   selectUserPassword,
   selectUserAccount,
   updateUserInfo,

@@ -13,28 +13,23 @@ const { emit } = require("nodemon");
  */
 exports.postSignUp = async function (req, res) {
   /**
-   * Body: password, nickname, authenticationNumber
+   * Body: email, password, nickname, authenticationNumber
    */
-  const { nickname, password } = req.body;
+  const { email, nickname, password } = req.body;
 
   // 빈 값 체크
+  if (!email) return res.send(response(baseResponse.SIGNUP_EMAIL_EMPTY));
   if (!password) return res.send(response(baseResponse.SIGNUP_PASSWORD_EMPTY));
   if (!nickname) return res.send(response(baseResponse.SIGNUP_NICKNAME_EMPTY));
-
-  // 길이 체크
-  if (email.length > 30)
-    return res.send(response(baseResponse.SIGNUP_EMAIL_LENGTH));
 
   // 형식 체크 (by 정규표현식)
   if (!regexEmail.test(email))
     return res.send(response(baseResponse.SIGNUP_EMAIL_ERROR_TYPE));
 
-  // 기타 등등 - 추가하기
-
   const signUpResponse = await userService.createUser(
     email,
-    password,
-    nickname
+    nickname,
+    password
   );
 
   return res.send(signUpResponse);
@@ -89,7 +84,10 @@ exports.getUserById = async function (req, res) {
 exports.login = async function (req, res) {
   const { email, password } = req.body;
 
-  // TODO: email, password 형식적 Validation
+  // 형식적 Validation 처리
+  if (!email) return res.send(errResponse(baseResponse.SIGNIN_EMAIL_EMPTY));
+  if (!password)
+    return res.send(errResponse(baseResponse.SIGNIN_PASSWORD_EMPTY));
 
   const signInResponse = await userService.postSignIn(email, password);
 
