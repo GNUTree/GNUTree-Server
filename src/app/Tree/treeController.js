@@ -36,7 +36,14 @@ exports.postDecoration = async function (req, res) {
 
   const { imageIdx, nickname, message } = req.body;
   const userIdx = req.userIdx;
+  const userIdxFromJWT = req.verifiedToken.userIdx;
 
+  // 본인 트리에 메세지 작성 불가
+  if (userIdxFromJWT == userIdx) {
+    return res.send(errResponse(baseResponse.DECORATION_BLOCK_OWN_WRITE));
+  }
+
+  // 형식적 validation 처리
   if (!imageIdx) {
     return res.send(errResponse(baseResponse.DECORATION_IMAGEIDX_EMPTY));
   } else if (!nickname) {

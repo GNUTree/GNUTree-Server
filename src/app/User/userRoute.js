@@ -15,7 +15,7 @@ module.exports = function (app) {
   app.post("/sign-in", user.login);
 
   // 회원 정보 수정 API (JWT 검증 및 Validation - 메소드 체이닝 방식으로 jwtMiddleware 사용)
-  app.patch("/app/users/:userId", jwtMiddleware, user.patchUsers);
+  //app.patch("/app/users/:userId", jwtMiddleware, user.patchUsers);
 };
 
 // TODO: 자동로그인 API (JWT 검증 및 Payload 내뱉기)

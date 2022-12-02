@@ -64,12 +64,12 @@ exports.postSignIn = async function (email, password) {
     //토큰 생성 Service
     let token = await jwt.sign(
       {
-        userId: userRows[0].idx,
+        userIdx: userRows[0].idx,
       }, // 토큰의 내용(payload)
       secret_config.jwtsecret, // 비밀키
       {
         expiresIn: "365d",
-        subject: "userInfo",
+        subject: "user",
       } // 유효 기간 365일
     );
 

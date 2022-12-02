@@ -6,7 +6,7 @@ module.exports = {
   TOKEN_EMPTY: {
     isSuccess: false,
     code: 400,
-    message: "JWT 토큰을 입력해주세요.",
+    message: "로그인을 해야 서비스 이용이 가능합니다.",
   },
   TOKEN_VERIFICATION_FAILURE: {
     isSuccess: false,
@@ -103,6 +103,12 @@ module.exports = {
   },
 
   // Request error
+  DECORATION_BLOCK_OWN_WRITE: {
+    isSuccess: false,
+    code: 400,
+    message: "자신의 트리에 메세지를 작성할 수 없습니다.",
+  },
+
   DECORATION_IMAGEIDX_EMPTY: {
     isSuccess: false,
     code: 400,
