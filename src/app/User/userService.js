@@ -75,6 +75,7 @@ exports.postSignIn = async function (email, password) {
 
     return response(baseResponse.SUCCESS, {
       userIdx: userRows[0].idx,
+      nickname: userRows[0].nickname,
       jwt: token,
     });
   } catch (err) {
