@@ -41,3 +41,21 @@ exports.decorationCheck = async function (decorationIdx) {
 
   return decorationRow;
 };
+
+// 유저 status 값 조회 (boolean)
+exports.userStatusCheck = async function (userIdx) {
+  const connection = await pool.getConnection(async (conn) => conn);
+
+  const userRow = await treeDao.selectUserIdx(connection, userIdx);
+
+  connection.release();
+
+  // 계정 상태 확인
+  if (userRow.status == "BANNED") {
+    return errResponse(baseResponse.SIGNIN_BANNED_ACCOUNT);
+  }
+  if (userRow.status == "DELETED") {
+    return errResponse(baseResponse.SIGNIN_WITHDRAWAL_ACCOUNT);
+  }
+  return;
+};

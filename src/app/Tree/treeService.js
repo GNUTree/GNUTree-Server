@@ -5,11 +5,30 @@ const treeProvider = require("./treeProvider");
 const treeDao = require("./treeDao");
 const baseResponse = require("../../../config/baseResponseStatus");
 const { response, errResponse } = require("../../../config/response");
+const res = require("express/lib/response");
 
-exports.postDecoration = async function (imageUrl, nickname, message, userIdx) {
+exports.postDecoration = async function (
+  imageUrl,
+  nickname,
+  message,
+  userIdx,
+  writterIdx
+) {
+  // 장식품 생성자 status 검사
+  const checkUserStatus = await treeProvider.userStatusCheck(writterIdx);
+  if (checkUserStatus) {
+    return checkUserStatus;
+  }
+
   const connection = await pool.getConnection(async (conn) => conn);
   try {
-    const postDecorationInfoParams = [imageUrl, nickname, message, userIdx];
+    const postDecorationInfoParams = [
+      imageUrl,
+      nickname,
+      message,
+      userIdx,
+      writterIdx,
+    ];
     await connection.beginTransaction();
     const postDecorationResult = await treeDao.insertDecoration(
       connection,

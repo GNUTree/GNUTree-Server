@@ -59,7 +59,8 @@ exports.postDecoration = async function (req, res) {
     imageUrl,
     nickname,
     message,
-    userIdx
+    userIdx,
+    userIdxFromJWT
   );
   return res.send(postDecorationResponse);
 };

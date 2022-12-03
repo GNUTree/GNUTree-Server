@@ -27,21 +27,32 @@ async function selectDecoration(connection, decorationIdx) {
   return decorationListRow;
 }
 
-async function selectUserIdx(connection, userEmail) {
-  const selectUserIdxQuery = `
-                SELECT idx
+async function selectUserEmail(connection, userEmail) {
+  const selectUserEmailQuery = `
+                SELECT idx, status
                   FROM User
                  WHERE email = ?
                 `;
-  const [userIdxRow] = await connection.query(selectUserIdxQuery, userEmail);
+  const [userRow] = await connection.query(selectUserEmailQuery, userEmail);
 
-  return userIdxRow[0];
+  return userRow[0];
+}
+
+async function selectUserIdx(connection, userIdx) {
+  const selectUserIdxQuery = `
+                SELECT idx, status
+                  FROM User
+                 WHERE idx = ?
+                `;
+  const [userRow] = await connection.query(selectUserIdxQuery, userIdx);
+
+  return userRow[0];
 }
 
 async function insertDecoration(connection, postDecorationInfoParams) {
   const insertDecorationQuery = `
-                INSERT INTO Decoration (imageUrl, nickname, message, userIdx)
-                 VALUE (?, ?, ?, ?)
+                INSERT INTO Decoration (imageUrl, nickname, message, userIdx, writterIdx)
+                 VALUE (?, ?, ?, ?, ?)
                 `;
   const insertDecorationRow = await connection.query(
     insertDecorationQuery,
@@ -82,6 +93,7 @@ async function existDecoration(connection, decorationIdx) {
 module.exports = {
   selectDecorations,
   selectDecoration,
+  selectUserEmail,
   selectUserIdx,
   insertDecoration,
   deleteDecoration,

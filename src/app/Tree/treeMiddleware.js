@@ -16,7 +16,7 @@ const checkEmail = async (req, res, next) => {
   }
 
   const connection = await pool.getConnection(async (conn) => conn);
-  const userIdx = await treeDao.selectUserIdx(connection, userEmail);
+  const userIdx = await treeDao.selectUserEmail(connection, userEmail);
   connection.release();
 
   if (!userIdx) {
