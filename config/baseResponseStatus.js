@@ -139,6 +139,12 @@ module.exports = {
     message: "해당 장식품이 존재하지 않습니다.",
   },
 
+  DECORATION_WRITTER_NOT_MATCHED: {
+    isSuccess: false,
+    code: 400,
+    message: "장식품 작성자가 아닙니다.",
+  },
+
   // Response error
 
   // Connection, Transaction 등의 서버 오류

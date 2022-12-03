@@ -78,7 +78,7 @@ async function deleteDecoration(connection, decorationIdx) {
 
 async function existDecoration(connection, decorationIdx) {
   const existDecorationQuery = `
-                SELECT idx
+                SELECT writterIdx
                 FROM Decoration
                 WHERE idx = ?
                 `;
@@ -87,7 +87,7 @@ async function existDecoration(connection, decorationIdx) {
     decorationIdx
   );
 
-  return decorationRow[0] ? true : false;
+  return decorationRow[0];
 }
 
 module.exports = {

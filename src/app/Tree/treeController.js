@@ -91,12 +91,14 @@ exports.deleteDecoration = async function (req, res) {
    * Path Variable: userId, decorationIdx
    */
   const { decorationIdx } = req.params;
+  const userIdxFromJWT = req.verifiedToken.userIdx;
 
   if (!decorationIdx)
     return res.send(errResponse(baseResponse.DECORATION_DECORATIONIDX_EMPTY));
 
   const deleteDecorationResponse = await treeService.deleteDecoration(
-    parseInt(decorationIdx)
+    parseInt(decorationIdx),
+    userIdxFromJWT
   );
 
   return res.send(deleteDecorationResponse);

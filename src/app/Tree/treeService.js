@@ -45,12 +45,17 @@ exports.postDecoration = async function (
   }
 };
 
-exports.deleteDecoration = async function (decorationIdx) {
+exports.deleteDecoration = async function (decorationIdx, writterIdx) {
   const connection = await pool.getConnection(async (conn) => conn);
   try {
     const isExistDecoration = await treeProvider.decorationCheck(decorationIdx);
+    // 장식품이 존재하는지 확인
     if (!isExistDecoration) {
       return errResponse(baseResponse.DECORATION_NOT_EXIST);
+    }
+    // 작성자 검증
+    if (writterIdx !== isExistDecoration.writterIdx) {
+      return errResponse(baseResponse.DECORATION_WRITTER_NOT_MATCHED);
     }
 
     await connection.beginTransaction();

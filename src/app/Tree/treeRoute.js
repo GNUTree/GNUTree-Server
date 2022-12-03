@@ -24,6 +24,7 @@ module.exports = function (app) {
   // 장식품 삭제 API
   app.delete(
     "/trees/:userId/decoration/:decorationIdx",
+    jwtMiddleware,
     checkEmail,
     tree.deleteDecoration
   );
