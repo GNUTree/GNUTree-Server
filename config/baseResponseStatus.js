@@ -139,6 +139,12 @@ module.exports = {
     message: "해당 장식품이 존재하지 않습니다.",
   },
 
+  DECORATION_OWNER_NOT_MATCHED: {
+    isSuccess: false,
+    code: 400,
+    message: "트리 주인이 아닙니다.",
+  },
+
   DECORATION_WRITTER_NOT_MATCHED: {
     isSuccess: false,
     code: 400,

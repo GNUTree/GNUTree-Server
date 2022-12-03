@@ -17,6 +17,7 @@ module.exports = function (app) {
   // 장식품 상세 조회 API
   app.get(
     "/trees/:userId/decoration/:decorationIdx",
+    jwtMiddleware,
     checkEmail,
     tree.getDecoration
   );

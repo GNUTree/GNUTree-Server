@@ -74,9 +74,15 @@ exports.getDecoration = async function (req, res) {
    * Path Variable: userId, decorationIdx
    */
   const { decorationIdx } = req.params;
+  const userIdxFromJWT = req.verifiedToken.userIdx;
+  const treeUserIdx = req.userIdx;
 
   if (!decorationIdx)
     return res.send(errResponse(baseResponse.DECORATION_DECORATIONIDX_EMPTY));
+  // 트리 주인 검증
+  if (userIdxFromJWT != treeUserIdx) {
+    return res.send(errResponse(baseResponse.DECORATION_OWNER_NOT_MATCHED));
+  }
 
   const decorationResult = await treeProvider.retrieveDecoration(decorationIdx);
 
