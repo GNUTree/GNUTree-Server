@@ -24,6 +24,7 @@ const checkEmail = async (req, res, next) => {
   }
 
   req.userIdx = userIdx.idx;
+  req.nickname = userIdx.nickname;
   next();
 };
 

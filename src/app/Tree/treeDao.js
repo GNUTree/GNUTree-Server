@@ -29,7 +29,7 @@ async function selectDecoration(connection, decorationIdx) {
 
 async function selectUserEmail(connection, userEmail) {
   const selectUserEmailQuery = `
-                SELECT idx, status
+                SELECT idx, nickname, status
                   FROM User
                  WHERE email = ?
                 `;

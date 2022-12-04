@@ -11,7 +11,7 @@ async function selectUser(connection) {
 // 이메일로 상세 회원 조회
 async function selectUserEmail(connection, email) {
   const selectUserEmailQuery = `
-                SELECT idx, status, email, nickname, password
+                SELECT idx, status, email, password
                 FROM User
                 WHERE email = ?;
                 `;

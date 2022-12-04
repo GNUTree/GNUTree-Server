@@ -15,9 +15,11 @@ exports.getDecorations = async function (req, res) {
    * Path Variable: userId
    */
   const userIdx = req.userIdx;
+  const ownerNickname = req.nickname;
 
   const decorationListResult = await treeProvider.retrieveDecorationList(
-    userIdx
+    userIdx,
+    ownerNickname
   );
 
   return res.send(decorationListResult);
@@ -74,17 +76,21 @@ exports.getDecoration = async function (req, res) {
    * Path Variable: userId, decorationIdx
    */
   const { decorationIdx } = req.params;
-  const userIdxFromJWT = req.verifiedToken.userIdx;
+  const loggedInUserIdx = req.verifiedToken.userIdx;
   const treeUserIdx = req.userIdx;
+  const ownerNickname = req.nickname;
 
   if (!decorationIdx)
     return res.send(errResponse(baseResponse.DECORATION_DECORATIONIDX_EMPTY));
   // 트리 주인 검증
-  if (userIdxFromJWT != treeUserIdx) {
+  if (loggedInUserIdx != treeUserIdx) {
     return res.send(errResponse(baseResponse.DECORATION_OWNER_NOT_MATCHED));
   }
 
-  const decorationResult = await treeProvider.retrieveDecoration(decorationIdx);
+  const decorationResult = await treeProvider.retrieveDecoration(
+    decorationIdx,
+    ownerNickname
+  );
 
   return res.send(decorationResult);
 };
