@@ -56,7 +56,7 @@ exports.decorationCheck = async function (decorationIdx) {
   return decorationRow;
 };
 
-// 유저 status 값 조회 (boolean)
+// 유저 status 값 조회
 exports.userStatusCheck = async function (userIdx) {
   const connection = await pool.getConnection(async (conn) => conn);
 
@@ -72,4 +72,19 @@ exports.userStatusCheck = async function (userIdx) {
     return errResponse(baseResponse.SIGNIN_WITHDRAWAL_ACCOUNT);
   }
   return;
+};
+
+// 24시간 내에 트리에 글을 쓴 적이 있는지 검사
+exports.checkWriterHistory = async function (userIdx, writterIdx) {
+  const connection = await pool.getConnection(async (conn) => conn);
+
+  const decorationRow = await treeDao.selectDecorationTime(
+    connection,
+    userIdx,
+    writterIdx
+  );
+
+  connection.release();
+
+  return decorationRow;
 };

@@ -151,6 +151,12 @@ module.exports = {
     message: "장식품 작성자가 아닙니다.",
   },
 
+  DECORATION_WRITE_TOO_MUCH: {
+    isSuccess: false,
+    code: 400,
+    message: "이미 트리에 메세지를 작성했습니다. 내일 다시 찾아와주세요.",
+  },
+
   // Response error
 
   // Connection, Transaction 등의 서버 오류

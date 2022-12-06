@@ -19,6 +19,14 @@ exports.postDecoration = async function (
   if (checkUserStatus) {
     return checkUserStatus;
   }
+  // 24시간 내에 트리에 글을 쓴 적이 있는지 검사
+  const checkWriterHistory = await treeProvider.checkWriterHistory(
+    userIdx,
+    writterIdx
+  );
+  if (checkWriterHistory) {
+    return errResponse(baseResponse.DECORATION_WRITE_TOO_MUCH);
+  }
 
   const connection = await pool.getConnection(async (conn) => conn);
   try {

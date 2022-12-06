@@ -90,6 +90,24 @@ async function existDecoration(connection, decorationIdx) {
   return decorationRow[0];
 }
 
+async function selectDecorationTime(connection, userIdx, writterIdx) {
+  const selectDecorationTimeQuery = `
+                SELECT createdAt
+                FROM Decoration
+                WHERE (createdAt BETWEEN DATE_ADD(NOW(), INTERVAL -1 DAY ) AND NOW())
+                AND (status = "NORMAL")
+                AND userIdx = ?
+                AND writterIdx = ?
+                `;
+  const selectDecorationParams = [userIdx, writterIdx];
+  const [decorationRow] = await connection.query(
+    selectDecorationTimeQuery,
+    selectDecorationParams
+  );
+
+  return decorationRow[0];
+}
+
 module.exports = {
   selectDecorations,
   selectDecoration,
@@ -98,4 +116,5 @@ module.exports = {
   insertDecoration,
   deleteDecoration,
   existDecoration,
+  selectDecorationTime,
 };
