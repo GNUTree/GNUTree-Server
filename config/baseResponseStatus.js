@@ -80,6 +80,11 @@ module.exports = {
     code: 400,
     message: "패스워드가 틀립니다.",
   },
+  SIGNUP_EMAIL_COOLTIME: {
+    isSuccess: "false",
+    code: 400,
+    message: "이메일을 재전송 하기에는 너무 이릅니다.",
+  },
   SIGNIN_BANNED_ACCOUNT: {
     isSuccess: "false",
     code: 400,

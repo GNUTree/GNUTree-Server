@@ -14,13 +14,18 @@ exports.sendEmail = async function (req, res) {
    * Body: email
    */
   const { email } = req.body;
+  const hashAuth = req.cookies.hashAuth;
+
+  // 이메일 전송 쿨타임 체크
+  if (hashAuth)
+    return res.send(errResponse(baseResponse.SIGNUP_EMAIL_COOLTIME));
 
   // 빈 값 체크
-  if (!email) return res.send(response(baseResponse.SIGNUP_EMAIL_EMPTY));
+  if (!email) return res.send(errResponse(baseResponse.SIGNUP_EMAIL_EMPTY));
 
   // 형식 체크 (by 정규표현식)
   if (!regexEmail.test(email))
-    return res.send(response(baseResponse.SIGNUP_EMAIL_ERROR_TYPE));
+    return res.send(errResponse(baseResponse.SIGNUP_EMAIL_ERROR_TYPE));
 
   const sendEmailResponse = await apiService.sendEmail(email);
 
@@ -46,11 +51,11 @@ exports.checkHashAuth = async function (req, res) {
 
   // 인증시간 만료 여부 체크
   if (!hashAuth)
-    return res.send(response(baseResponse.SIGNUP_EMAIL_AUTH_EXPIRE));
+    return res.send(errResponse(baseResponse.SIGNUP_EMAIL_AUTH_EXPIRE));
 
   // 빈 값 체크
   if (!authenticationNumber)
-    return res.send(response(baseResponse.SIGNUP_AUTH_EMPTY));
+    return res.send(errResponse(baseResponse.SIGNUP_AUTH_EMPTY));
 
   const checkHashAuthResponse = await apiService.checkHashAuth(
     hashAuth,
