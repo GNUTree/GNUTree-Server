@@ -1,11 +1,12 @@
-const jwtMiddleware = require("../../../config/jwtMiddleware");
 const userProvider = require("../../app/User/userProvider");
 const userService = require("../../app/User/userService");
 const baseResponse = require("../../../config/baseResponseStatus");
 const { response, errResponse } = require("../../../config/response");
-
-const regexEmail = require("regex-email");
-const { emit } = require("nodemon");
+const {
+  regexPassword,
+  regexEmail,
+  regexNickname,
+} = require("../../../config/regex");
 
 /**
  * API Name : 유저 생성 (회원가입) API
@@ -18,13 +19,22 @@ exports.postSignUp = async function (req, res) {
   const { email, nickname, password } = req.body;
 
   // 빈 값 체크
-  if (!email) return res.send(response(baseResponse.SIGNUP_EMAIL_EMPTY));
-  if (!password) return res.send(response(baseResponse.SIGNUP_PASSWORD_EMPTY));
-  if (!nickname) return res.send(response(baseResponse.SIGNUP_NICKNAME_EMPTY));
+  if (!email) return res.send(errResponse(baseResponse.SIGNUP_EMAIL_EMPTY));
+  if (!password)
+    return res.send(errResponse(baseResponse.SIGNUP_PASSWORD_EMPTY));
+  if (!nickname)
+    return res.send(errResponse(baseResponse.SIGNUP_NICKNAME_EMPTY));
 
   // 형식 체크 (by 정규표현식)
-  if (!regexEmail.test(email))
-    return res.send(response(baseResponse.SIGNUP_EMAIL_ERROR_TYPE));
+  if (!regexEmail.test(email)) {
+    return res.send(errResponse(baseResponse.SIGNUP_EMAIL_ERROR_TYPE));
+  }
+  if (nickname.length > regexNickname) {
+    return res.send(errResponse(baseResponse.SIGNUP_NICKNAME_TOO_LONG));
+  }
+  if (!regexPassword.test(password)) {
+    return res.send(errResponse(baseResponse.SIGNUP_PASSWORD_ERROR_TYPE));
+  }
 
   const signUpResponse = await userService.createUser(
     email,

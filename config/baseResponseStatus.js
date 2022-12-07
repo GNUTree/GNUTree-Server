@@ -27,7 +27,18 @@ module.exports = {
   SIGNUP_EMAIL_ERROR_TYPE: {
     isSuccess: false,
     code: 400,
-    message: "이메일을 형식을 정확하게 입력해주세요.",
+    message: "이메일 형식을 정확하게 입력해주세요.",
+  },
+  SIGNUP_PASSWORD_ERROR_TYPE: {
+    isSuccess: false,
+    code: 400,
+    message:
+      "비밀번호는 8~16자로 문자, 숫자, 특수 문자 조합으로 구성되어야 합니다.",
+  },
+  SIGNUP_NICKNAME_TOO_LONG: {
+    isSuccess: false,
+    code: 400,
+    message: "닉네임은 10자 이하이여야 합니다.",
   },
   SIGNUP_REDUNDANT_EMAIL: {
     isSuccess: false,
@@ -130,6 +141,18 @@ module.exports = {
     isSuccess: false,
     code: 400,
     message: "메세지를 입력해주세요.",
+  },
+
+  DECORATION_NICKNAME_TOO_LONG: {
+    isSuccess: false,
+    code: 400,
+    message: "닉네임은 10자 이하이여야 합니다.",
+  },
+
+  DECORATION_MESSAGE_TOO_LONG: {
+    isSuccess: false,
+    code: 400,
+    message: "메세지는 최대 200자까지만 허용됩니다.",
   },
 
   DECORATION_DECORATIONIDX_EMPTY: {

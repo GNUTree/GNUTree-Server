@@ -3,8 +3,7 @@ const treeProvider = require("../../app/Tree/treeProvider");
 const treeService = require("../../app/Tree/treeService");
 const baseResponse = require("../../../config/baseResponseStatus");
 const { response, errResponse } = require("../../../config/response");
-
-const regexEmail = require("regex-email");
+const { regexNickname, regexMessage } = require("../../../config/regex");
 
 /**
  * API Name : 전체 장식품 조회 API
@@ -52,6 +51,10 @@ exports.postDecoration = async function (req, res) {
     return res.send(errResponse(baseResponse.DECORATION_NICKNAME_EMPTY));
   } else if (!message) {
     return res.send(errResponse(baseResponse.DECORATION_MESSAGE_EMPTY));
+  } else if (nickname.length > regexNickname) {
+    return res.send(errResponse(baseResponse.DECORATION_NICKNAME_TOO_LONG));
+  } else if (message.length > regexMessage) {
+    return res.send(errResponse(baseResponse.DECORATION_MESSAGE_TOO_LONG));
   }
 
   //TODO: imageIdx -> ImageUrl 변경 로직 표직

@@ -2,8 +2,7 @@ const apiProvider = require("./apiProvider");
 const apiService = require("./apiService");
 const baseResponse = require("../../../config/baseResponseStatus");
 const { response, errResponse } = require("../../../config/response");
-
-const regexEmail = require("regex-email");
+const { regexEmail } = require("../../../config/regex");
 
 /**
  * API Name : 이메일 인증번호 요청 API
