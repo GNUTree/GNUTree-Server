@@ -19,15 +19,15 @@ module.exports = {
     message: "JWT 토큰 검증 성공",
   },
 
-  SIGNUP_EMAIL_EMPTY: {
+  SIGNUP_ID_EMPTY: {
     isSuccess: false,
     code: 400,
-    message: "이메일을 입력해주세요.",
+    message: "아이디를 입력해주세요.",
   },
-  SIGNUP_EMAIL_ERROR_TYPE: {
+  SIGNUP_ID_ERROR_TYPE: {
     isSuccess: false,
     code: 400,
-    message: "이메일 형식을 정확하게 입력해주세요.",
+    message: "이메일 형식이 아닌 아이디를 입력해주세요.",
   },
   SIGNUP_PASSWORD_ERROR_TYPE: {
     isSuccess: false,
@@ -49,6 +49,11 @@ module.exports = {
     isSuccess: false,
     code: 400,
     message: "인증번호 유효 시간이 만료되었습니다.",
+  },
+  SIGNUP_EMAIL_SESSION_EXPIRE: {
+    isSuccess: false,
+    code: 400,
+    message: "이메일 세션이 만료되었습니다. 다시 시도해주세요.",
   },
   SIGNUP_AUTH_VERIFICATION_FAILURE: {
     isSuccess: false,

@@ -14,12 +14,15 @@ const {
  */
 exports.postSignUp = async function (req, res) {
   /**
-   * Body: email, password, nickname, authenticationNumber
+   * Body: password, nickname, authenticationNumber
+   * Cookie: email
    */
-  const { email, nickname, password } = req.body;
+  const { nickname, password } = req.body;
+  const { email } = req.cookies;
 
   // 빈 값 체크
-  if (!email) return res.send(errResponse(baseResponse.SIGNUP_EMAIL_EMPTY));
+  if (!email)
+    return res.send(errResponse(baseResponse.SIGNUP_EMAIL_SESSION_EXPIRE));
   if (!password)
     return res.send(errResponse(baseResponse.SIGNUP_PASSWORD_EMPTY));
   if (!nickname)
@@ -41,6 +44,9 @@ exports.postSignUp = async function (req, res) {
     nickname,
     password
   );
+
+  // 쿠키 초기화
+  res.clearCookie("email");
 
   return res.send(signUpResponse);
 };
