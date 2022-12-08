@@ -111,6 +111,38 @@ exports.login = async function (req, res) {
 };
 
 /**
+ * API Name : 비밀번호 재설정 API
+ * [POST] /reset-password
+ * body : password
+ * cookie : email
+ */
+exports.resetPassword = async function (req, res) {
+  const { password } = req.body;
+  const { email } = req.cookies;
+
+  // 빈 값 체크
+  if (!password)
+    return res.send(errResponse(baseResponse.SIGNUP_PASSWORD_EMPTY));
+  if (!email)
+    return res.send(errResponse(baseResponse.SIGNUP_EMAIL_SESSION_EXPIRE));
+
+  // 정규표현식 체크
+  if (!regexPassword.test(password)) {
+    return res.send(errResponse(baseResponse.SIGNUP_PASSWORD_ERROR_TYPE));
+  }
+
+  const resetPasswordResponse = await userService.resetPassword(
+    email,
+    password
+  );
+
+  // 쿠키 초기화
+  res.clearCookie("email");
+
+  return res.send(resetPasswordResponse);
+};
+
+/**
  * API No. 5
  * API Name : 회원 정보 수정 API + JWT + Validation
  * [PATCH] /app/users/:userId

@@ -12,28 +12,43 @@ const bcrypt = require("bcrypt");
 // Service: Create, Update, Delete 비즈니스 로직 처리
 
 exports.createUser = async function (email, nickname, password) {
+  // 이메일 중복 확인
+  const emailRows = await userProvider.emailCheck(email);
+  if (emailRows.length > 0)
+    return errResponse(baseResponse.SIGNUP_REDUNDANT_EMAIL);
+
+  const connection = await pool.getConnection(async (conn) => conn);
   try {
-    // 이메일 중복 확인
-    const emailRows = await userProvider.emailCheck(email);
-    if (emailRows.length > 0)
-      return errResponse(baseResponse.SIGNUP_REDUNDANT_EMAIL);
-
+    await connection.beginTransaction();
     const hashedPassword = await bcrypt.hash(password, 10); // 비밀번호 암호화
-
     const insertUserParams = [email, nickname, hashedPassword];
-
-    const connection = await pool.getConnection(async (conn) => conn);
-
-    const insertUserResult = await userDao.insertUser(
-      connection,
-      insertUserParams
-    );
-    connection.release();
+    await userDao.insertUser(connection, insertUserParams);
+    await connection.commit();
 
     return response(baseResponse.SUCCESS);
   } catch (err) {
     logger.error(`App - createUser Service error\n: ${err.message}`);
     return errResponse(baseResponse.DB_ERROR);
+  } finally {
+    connection.release();
+  }
+};
+
+exports.resetPassword = async function (email, password) {
+  const connection = await pool.getConnection(async (conn) => conn);
+  try {
+    await connection.beginTransaction();
+    const hashedPassword = await bcrypt.hash(password, 10); // 비밀번호 암호화
+    const updateUserPasswordParams = [hashedPassword, email];
+    await userDao.updateUserPassword(connection, updateUserPasswordParams);
+    await connection.commit();
+
+    return response(baseResponse.SUCCESS);
+  } catch (err) {
+    logger.error(`App - resetPassword Service error\n: ${err.message}`);
+    return errResponse(baseResponse.DB_ERROR);
+  } finally {
+    connection.release();
   }
 };
 
@@ -88,19 +103,20 @@ exports.postSignIn = async function (email, password) {
 };
 
 exports.editUser = async function (id, nickname) {
+  const connection = await pool.getConnection(async (conn) => conn);
   try {
-    console.log(id);
-    const connection = await pool.getConnection(async (conn) => conn);
+    await connection.beginTransaction();
     const editUserResult = await userDao.updateUserInfo(
       connection,
       id,
       nickname
     );
-    connection.release();
-
+    await connection.commit();
     return response(baseResponse.SUCCESS);
   } catch (err) {
     logger.error(`App - editUser Service error\n: ${err.message}`);
     return errResponse(baseResponse.DB_ERROR);
+  } finally {
+    connection.release();
   }
 };
