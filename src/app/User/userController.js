@@ -95,13 +95,20 @@ exports.getUserById = async function (req, res) {
  * API No. 4
  * API Name : 로그인 API
  * [POST] /app/login
- * body : email, passsword
+ * body : id, passsword
  */
 exports.login = async function (req, res) {
-  const { email, password } = req.body;
+  const { id, password } = req.body;
 
-  // 형식적 Validation 처리
-  if (!email) return res.send(errResponse(baseResponse.SIGNIN_EMAIL_EMPTY));
+  // 빈 값 체크
+  if (!id) return res.send(errResponse(baseResponse.SIGNIN_ID_EMPTY));
+  // 형식 체크 (by 정규표현식)
+  if (regexEmail.test(id))
+    return res.send(errResponse(baseResponse.SIGNIN_ID_ERROR_TYPE));
+
+  const email = id + "@gnu.ac.kr";
+
+  // 빈 값 체크
   if (!password)
     return res.send(errResponse(baseResponse.SIGNIN_PASSWORD_EMPTY));
 

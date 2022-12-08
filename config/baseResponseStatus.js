@@ -76,10 +76,15 @@ module.exports = {
     message: "인증번호를 입력해주세요.",
   },
 
-  SIGNIN_EMAIL_EMPTY: {
+  SIGNIN_ID_EMPTY: {
     isSuccess: false,
     code: 400,
-    message: "이메일을 입력해주세요.",
+    message: "아이디를 입력해주세요.",
+  },
+  SIGNIN_ID_ERROR_TYPE: {
+    isSuccess: false,
+    code: 400,
+    message: "이메일 형식이 아닌 아이디를 입력해주세요.",
   },
   SIGNIN_PASSWORD_EMPTY: {
     isSuccess: false,
