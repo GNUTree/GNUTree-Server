@@ -15,8 +15,13 @@ module.exports = function (app) {
   // 비밀번호 재설정 API
   app.post("/reset-password", user.resetPassword);
 
-  // 회원 정보 관리 페이지
-  app.get("/users/edit/:userId", jwtMiddleware, checkEmail, user.getUserById);
+  // get: 회원 정보 관리 페이지
+  // post: 사용자 개인정보 변경 API
+  app
+    .route("/users/edit/:userId")
+    .all(jwtMiddleware, checkEmail)
+    .get(user.getUserById)
+    .post(user.editUserInfo);
 
   // 회원 정보 수정 API (JWT 검증 및 Validation - 메소드 체이닝 방식으로 jwtMiddleware 사용)
   //app.patch("/app/users/:userId", jwtMiddleware, user.patchUsers);

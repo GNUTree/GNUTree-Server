@@ -83,6 +83,8 @@ exports.getUserById = async function (req, res) {
    * jwt - userIdx
    * Middleware: idx, nickname
    */
+
+  // 사용자 검증
   const loggedInUserIdx = req.verifiedToken.userIdx;
   const pageUserIdx = req.userIdx;
 
@@ -91,6 +93,55 @@ exports.getUserById = async function (req, res) {
   }
 
   return res.send(response(baseResponse.SUCCESS, req.nickname));
+};
+
+/**
+ * API Name : 사용자 개인정보 변경 API
+ * [POST] /users/edit/:userId
+ */
+exports.editUserInfo = async function (req, res) {
+  /**
+   * Path Variable: userId
+   * body: nickname, password
+   * jwt - userIdx
+   * Middleware: idx, nickname
+   */
+  const loggedInUserIdx = req.verifiedToken.userIdx;
+  const pageUserIdx = req.userIdx;
+  const { nickname, password } = req.body;
+
+  // 사용자 검증
+  if (!loggedInUserIdx == pageUserIdx) {
+    return res.send(errResponse(baseResponse.USER_IDX_NOT_MATCH));
+  }
+
+  // 닉네임 형식 체크
+  if (!nickname) {
+    return res.send(errResponse(baseResponse.USER_NICKNAME_EMPTY));
+  } else if (nickname.length > regexNickname) {
+    return res.send(errResponse(baseResponse.SIGNUP_NICKNAME_TOO_LONG));
+  }
+
+  // 패스워드 값 입력 안할 시, 닉네임만 변경
+  // 패스워드 값 입력 시, 닉네임+패스워드 변경
+  if (!password) {
+    const editUserInfoResponse = await userService.editUserNickname(
+      loggedInUserIdx,
+      nickname
+    );
+    return res.send(editUserInfoResponse);
+  } else {
+    // 패스워드 regex 체크
+    if (!regexPassword.test(password)) {
+      return res.send(errResponse(baseResponse.SIGNUP_PASSWORD_ERROR_TYPE));
+    }
+    const editUserInfoResponse = await userService.editUserNicknamePassword(
+      loggedInUserIdx,
+      nickname,
+      password
+    );
+    return res.send(editUserInfoResponse);
+  }
 };
 
 // TODO: After 로그인 인증 방법 (JWT)

@@ -132,6 +132,11 @@ module.exports = {
     code: 400,
     message: "권한이 없습니다.",
   },
+  USER_NICKNAME_EMPTY: {
+    isSuccess: false,
+    code: 400,
+    message: "닉네임을 입력해주세요.",
+  },
 
   // Request error
   DECORATION_BLOCK_OWN_WRITE: {

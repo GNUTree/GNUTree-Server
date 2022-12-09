@@ -8,6 +8,7 @@ const { response, errResponse } = require("../../../config/response");
 
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
+const res = require("express/lib/response");
 
 // Service: Create, Update, Delete 비즈니스 로직 처리
 
@@ -115,6 +116,45 @@ exports.editUser = async function (id, nickname) {
     return response(baseResponse.SUCCESS);
   } catch (err) {
     logger.error(`App - editUser Service error\n: ${err.message}`);
+    return errResponse(baseResponse.DB_ERROR);
+  } finally {
+    connection.release();
+  }
+};
+
+exports.editUserNickname = async function (userIdx, nickname) {
+  const connection = await pool.getConnection(async (conn) => conn);
+  try {
+    await connection.beginTransaction();
+    const infoParams = [nickname, userIdx];
+    await userDao.updateUserNickname(connection, infoParams);
+    await connection.commit();
+    return response(baseResponse.SUCCESS);
+  } catch (err) {
+    logger.error(`App - editUserNickname Service error\n: ${err.message}`);
+    return errResponse(baseResponse.DB_ERROR);
+  } finally {
+    connection.release();
+  }
+};
+
+exports.editUserNicknamePassword = async function (
+  userIdx,
+  nickname,
+  password
+) {
+  const connection = await pool.getConnection(async (conn) => conn);
+  try {
+    await connection.beginTransaction();
+    const hashedPassword = await bcrypt.hash(password, 10); // 비밀번호 암호화
+    const infoParams = [nickname, hashedPassword, userIdx];
+    await userDao.updateUserNickname(connection, infoParams);
+    await connection.commit();
+    return response(baseResponse.SUCCESS);
+  } catch (err) {
+    logger.error(
+      `App - editUserNicknamePassword Service error\n: ${err.message}`
+    );
     return errResponse(baseResponse.DB_ERROR);
   } finally {
     connection.release();
