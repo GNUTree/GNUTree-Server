@@ -127,6 +127,11 @@ module.exports = {
     code: 400,
     message: "해당 유저가 존재하지 않습니다.",
   },
+  USER_IDX_NOT_MATCH: {
+    isSuccess: false,
+    code: 400,
+    message: "권한이 없습니다.",
+  },
 
   // Request error
   DECORATION_BLOCK_OWN_WRITE: {

@@ -74,20 +74,23 @@ exports.getUsers = async function (req, res) {
 };
 
 /**
- * API No. 3
- * API Name : 특정 유저 조회 API
- * [GET] /app/users/{userId}
+ * API Name : 회원 정보 관리 페이지
+ * [GET] /users/edit/:userId
  */
 exports.getUserById = async function (req, res) {
   /**
    * Path Variable: userId
+   * jwt - userIdx
+   * Middleware: idx, nickname
    */
-  const userId = req.params.userId;
+  const loggedInUserIdx = req.verifiedToken.userIdx;
+  const pageUserIdx = req.userIdx;
 
-  if (!userId) return res.send(errResponse(baseResponse.USERID_EMPTY));
+  if (!loggedInUserIdx == pageUserIdx) {
+    return res.send(errResponse(baseResponse.USER_IDX_NOT_MATCH));
+  }
 
-  const userByUserId = await userProvider.retrieveUser(userId);
-  return res.send(response(baseResponse.SUCCESS, userByUserId));
+  return res.send(response(baseResponse.SUCCESS, req.nickname));
 };
 
 // TODO: After 로그인 인증 방법 (JWT)
