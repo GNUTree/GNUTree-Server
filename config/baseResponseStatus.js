@@ -193,7 +193,7 @@ module.exports = {
     message: "트리 주인이 아닙니다.",
   },
 
-  DECORATION_WRITTER_NOT_MATCHED: {
+  DECORATION_WRITER_NOT_MATCHED: {
     isSuccess: false,
     code: 400,
     message: "장식품 작성자가 아닙니다.",

@@ -12,17 +12,17 @@ exports.postDecoration = async function (
   nickname,
   message,
   userIdx,
-  writterIdx
+  writerIdx
 ) {
   // 장식품 생성자 status 검사
-  const checkUserStatus = await treeProvider.userStatusCheck(writterIdx);
+  const checkUserStatus = await treeProvider.userStatusCheck(writerIdx);
   if (checkUserStatus) {
     return checkUserStatus;
   }
   // 24시간 내에 트리에 글을 쓴 적이 있는지 검사
   const checkWriterHistory = await treeProvider.checkWriterHistory(
     userIdx,
-    writterIdx
+    writerIdx
   );
   if (checkWriterHistory) {
     return errResponse(baseResponse.DECORATION_WRITE_TOO_MUCH);
@@ -35,7 +35,7 @@ exports.postDecoration = async function (
       nickname,
       message,
       userIdx,
-      writterIdx,
+      writerIdx,
     ];
     await connection.beginTransaction();
     const postDecorationResult = await treeDao.insertDecoration(
@@ -53,7 +53,7 @@ exports.postDecoration = async function (
   }
 };
 
-exports.deleteDecoration = async function (decorationIdx, writterIdx) {
+exports.deleteDecoration = async function (decorationIdx, writerIdx) {
   const connection = await pool.getConnection(async (conn) => conn);
   try {
     const isExistDecoration = await treeProvider.decorationCheck(decorationIdx);
@@ -62,8 +62,8 @@ exports.deleteDecoration = async function (decorationIdx, writterIdx) {
       return errResponse(baseResponse.DECORATION_NOT_EXIST);
     }
     // 작성자 검증
-    if (writterIdx !== isExistDecoration.writterIdx) {
-      return errResponse(baseResponse.DECORATION_WRITTER_NOT_MATCHED);
+    if (writerIdx !== isExistDecoration.writerIdx) {
+      return errResponse(baseResponse.DECORATION_writer_NOT_MATCHED);
     }
 
     await connection.beginTransaction();

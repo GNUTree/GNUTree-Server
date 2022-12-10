@@ -15,7 +15,7 @@ async function selectDecorations(connection, userIdx) {
 
 async function selectDecoration(connection, decorationIdx) {
   const selectDecorationQuery = `
-                SELECT idx, nickname, writterIdx, imageUrl, message
+                SELECT idx, nickname, writerIdx, imageUrl, message
                   FROM Decoration
                  WHERE idx = ? AND status = "NORMAL";
                 `;
@@ -51,7 +51,7 @@ async function selectUserIdx(connection, userIdx) {
 
 async function insertDecoration(connection, postDecorationInfoParams) {
   const insertDecorationQuery = `
-                INSERT INTO Decoration (imageUrl, nickname, message, userIdx, writterIdx)
+                INSERT INTO Decoration (imageUrl, nickname, message, userIdx, writerIdx)
                  VALUE (?, ?, ?, ?, ?)
                 `;
   const insertDecorationRow = await connection.query(
@@ -78,7 +78,7 @@ async function deleteDecoration(connection, decorationIdx) {
 
 async function existDecoration(connection, decorationIdx) {
   const existDecorationQuery = `
-                SELECT writterIdx
+                SELECT writerIdx
                 FROM Decoration
                 WHERE idx = ?
                 `;
@@ -90,16 +90,16 @@ async function existDecoration(connection, decorationIdx) {
   return decorationRow[0];
 }
 
-async function selectDecorationTime(connection, userIdx, writterIdx) {
+async function selectDecorationTime(connection, userIdx, writerIdx) {
   const selectDecorationTimeQuery = `
                 SELECT createdAt
                 FROM Decoration
                 WHERE (createdAt BETWEEN DATE_ADD(NOW(), INTERVAL -1 DAY ) AND NOW())
                 AND (status = "NORMAL")
                 AND userIdx = ?
-                AND writterIdx = ?
+                AND writerIdx = ?
                 `;
-  const selectDecorationParams = [userIdx, writterIdx];
+  const selectDecorationParams = [userIdx, writerIdx];
   const [decorationRow] = await connection.query(
     selectDecorationTimeQuery,
     selectDecorationParams
