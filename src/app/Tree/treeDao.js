@@ -15,7 +15,7 @@ async function selectDecorations(connection, userIdx) {
 
 async function selectDecoration(connection, decorationIdx) {
   const selectDecorationQuery = `
-                SELECT idx, nickname, imageUrl, message
+                SELECT idx, nickname, writterIdx, imageUrl, message
                   FROM Decoration
                  WHERE idx = ? AND status = "NORMAL";
                 `;
@@ -24,7 +24,7 @@ async function selectDecoration(connection, decorationIdx) {
     decorationIdx
   );
 
-  return decorationListRow;
+  return decorationListRow[0];
 }
 
 async function selectUserEmail(connection, userEmail) {

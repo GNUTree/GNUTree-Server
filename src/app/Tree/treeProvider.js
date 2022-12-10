@@ -29,18 +29,21 @@ exports.retrieveDecorationList = async function (userIdx, ownerNickname) {
   );
 };
 
-exports.retrieveDecoration = async function (decorationIdx, ownerNickname) {
+exports.retrieveDecoration = async function (decorationIdx) {
   const connection = await pool.getConnection(async (conn) => conn);
 
   const decoration = await treeDao.selectDecoration(connection, decorationIdx);
 
   connection.release();
 
-  if (decoration.length == 0) {
+  if (!decoration) {
     return errResponse(baseResponse.DECORATION_NOT_EXIST);
   }
 
-  return getDecorationResponse(baseResponse.SUCCESS, ownerNickname, decoration);
+  // imageIdx -> imageUrl 변환
+  decoration.imageUrl = getDecorationImageUrl(parseInt(decoration.imageUrl));
+
+  return response(baseResponse.SUCCESS, decoration);
 };
 
 exports.decorationCheck = async function (decorationIdx) {

@@ -81,7 +81,6 @@ exports.getDecoration = async function (req, res) {
   const { decorationIdx } = req.params;
   const loggedInUserIdx = req.verifiedToken.userIdx;
   const treeUserIdx = req.userIdx;
-  const ownerNickname = req.nickname;
 
   if (!decorationIdx)
     return res.send(errResponse(baseResponse.DECORATION_DECORATIONIDX_EMPTY));
@@ -90,10 +89,7 @@ exports.getDecoration = async function (req, res) {
     return res.send(errResponse(baseResponse.DECORATION_OWNER_NOT_MATCHED));
   }
 
-  const decorationResult = await treeProvider.retrieveDecoration(
-    decorationIdx,
-    ownerNickname
-  );
+  const decorationResult = await treeProvider.retrieveDecoration(decorationIdx);
 
   return res.send(decorationResult);
 };
