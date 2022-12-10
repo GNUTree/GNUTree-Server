@@ -92,27 +92,27 @@ module.exports = {
     message: "패스워드를 입력해주세요.",
   },
   SIGNIN_EMAIL_WRONG: {
-    isSuccess: "false",
+    isSuccess: false,
     code: 400,
     message: "존재하지 않는 이메일입니다.",
   },
   SIGNIN_PASSWORD_WRONG: {
-    isSuccess: "false",
+    isSuccess: false,
     code: 400,
     message: "패스워드가 틀립니다.",
   },
   SIGNUP_EMAIL_COOLTIME: {
-    isSuccess: "false",
+    isSuccess: false,
     code: 400,
     message: "이메일을 재전송 하기에는 너무 이릅니다.",
   },
   SIGNIN_BANNED_ACCOUNT: {
-    isSuccess: "false",
+    isSuccess: false,
     code: 400,
     message: "관리자에 의해 차단된 계정입니다.",
   },
   SIGNIN_WITHDRAWAL_ACCOUNT: {
-    isSuccess: "false",
+    isSuccess: false,
     code: 400,
     message: "탈퇴한 계정입니다.",
   },
