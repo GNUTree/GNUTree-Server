@@ -64,6 +64,7 @@ exports.userStatusCheck = async function (userIdx) {
   const connection = await pool.getConnection(async (conn) => conn);
 
   const userRow = await treeDao.selectUserIdx(connection, userIdx);
+  if (!userRow) return errResponse(baseResponse.USER_IDX_NOT_MATCH);
 
   connection.release();
 

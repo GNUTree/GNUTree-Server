@@ -22,7 +22,7 @@ async function selectUserEmail(connection, email) {
 // 유저 idx로 회원 조회
 async function selectUserIdx(connection, idx) {
   const selectUserIdxQuery = `
-                SELECT nickname
+                SELECT idx, nickname
                 FROM User
                 WHERE idx = ?;
                 `;

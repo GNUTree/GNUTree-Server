@@ -63,7 +63,7 @@ exports.deleteDecoration = async function (decorationIdx, writerIdx) {
     }
     // 작성자 검증
     if (writerIdx !== isExistDecoration.writerIdx) {
-      return errResponse(baseResponse.DECORATION_writer_NOT_MATCHED);
+      return errResponse(baseResponse.DECORATION_WRITER_NOT_MATCHED);
     }
 
     await connection.beginTransaction();
