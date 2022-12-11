@@ -17,7 +17,20 @@ module.exports = function () {
 
   app.use(cookieParser());
 
-  app.use(cors());
+  // 다른 서버와 통신 허용 (whitelist)
+  const whitelist = ["https://hatch.loca.lt"];
+  const corsOption = {
+    origin: function (origin, callback) {
+      if (whitelist.indexOf(origin) !== -1) {
+        callback(null, true);
+      } else {
+        callback(null, true);
+        //callback(new Error("Not Allowed Origin!"));
+      }
+    },
+    credentials: true,
+  };
+  app.use(cors(corsOption));
 
   app.use(cookieParser());
   // app.use(express.static(process.cwd() + '/public'));

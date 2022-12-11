@@ -18,9 +18,9 @@ exports.retrieveDecorationList = async function (userIdx, ownerNickname) {
   connection.release();
 
   // imageIdx -> imageUrl 변환
-  decorationList[0].imageUrl = getDecorationImageUrl(
-    parseInt(decorationList[0].imageUrl)
-  );
+  decorationList.forEach((decoration) => {
+    decoration.imageUrl = getDecorationImageUrl(parseInt(decoration.imageUrl));
+  });
 
   return getDecorationResponse(
     baseResponse.SUCCESS,

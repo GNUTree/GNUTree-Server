@@ -24,7 +24,7 @@ async function selectDecoration(connection, decorationIdx) {
     decorationIdx
   );
 
-  return decorationListRow[0];
+  return decorationListRow;
 }
 
 async function selectUserEmail(connection, userEmail) {

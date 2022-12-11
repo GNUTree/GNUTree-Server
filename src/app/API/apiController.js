@@ -68,8 +68,8 @@ exports.checkHashAuth = async function (req, res) {
     email
   );
 
-  // 인증번호 쿠키 초기화
-  res.clearCookie("hashAuth");
+  // 인증 성공시 인증번호 쿠키 초기화
+  if (checkHashAuthResponse.isSuccess) res.clearCookie("hashAuth");
 
   return res.send(checkHashAuthResponse);
 };
