@@ -19,6 +19,17 @@ async function selectUserEmail(connection, email) {
   return emailRows;
 }
 
+// 유저 idx로 회원 조회
+async function selectUserIdx(connection, idx) {
+  const selectUserIdxQuery = `
+                SELECT nickname
+                FROM User
+                WHERE idx = ?;
+                `;
+  const [userRows] = await connection.query(selectUserIdxQuery, idx);
+  return userRows;
+}
+
 // userId 회원 조회
 async function selectUserId(connection, userId) {
   const selectUserIdQuery = `
@@ -109,6 +120,7 @@ async function updateUserNickname(connection, params) {
 module.exports = {
   selectUser,
   selectUserEmail,
+  selectUserIdx,
   selectUserId,
   insertUser,
   selectUserPassword,

@@ -21,9 +21,9 @@ exports.retrieveUserList = async function (email) {
   }
 };
 
-exports.retrieveUser = async function (userId) {
+exports.retrieveUser = async function (userIdx) {
   const connection = await pool.getConnection(async (conn) => conn);
-  const userResult = await userDao.selectUserEmail(connection, userId);
+  const userResult = await userDao.selectUserIdx(connection, userIdx);
 
   connection.release();
 

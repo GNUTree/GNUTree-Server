@@ -122,7 +122,12 @@ module.exports = {
     code: 400,
     message: "userId를 입력해주세요.",
   },
-  USEREMAIL_NOT_EXIST: {
+  USERIDX_EMPTY: {
+    isSuccess: false,
+    code: 400,
+    message: "userIdx를 입력해주세요.",
+  },
+  USER_NOT_EXIST: {
     isSuccess: false,
     code: 400,
     message: "해당 유저가 존재하지 않습니다.",

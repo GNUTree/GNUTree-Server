@@ -75,43 +75,53 @@ exports.getUsers = async function (req, res) {
 
 /**
  * API Name : 회원 정보 관리 페이지
- * [GET] /users/edit/:userId
+ * [GET] /users/edit/:userIdx
  */
 exports.getUserById = async function (req, res) {
   /**
-   * Path Variable: userId
+   * Path Variable: userIdx
    * jwt - userIdx
-   * Middleware: idx, nickname
    */
 
   // 사용자 검증
   const loggedInUserIdx = req.verifiedToken.userIdx;
-  const pageUserIdx = req.userIdx;
+  const pageUserIdx = parseInt(req.params.userIdx);
+
+  // 빈 값 체크
+  if (!pageUserIdx) return res.send(errResponse(baseResponse.USERIDX_EMPTY));
 
   if (!loggedInUserIdx == pageUserIdx) {
     return res.send(errResponse(baseResponse.USER_IDX_NOT_MATCH));
   }
 
-  return res.send(response(baseResponse.SUCCESS, req.nickname));
+  const user = await userProvider.retrieveUser(pageUserIdx);
+
+  if (!user) {
+    return res.send(errResponse(baseResponse.USER_NOT_EXIST));
+  }
+
+  return res.send(response(baseResponse.SUCCESS, user.nickname));
 };
 
 /**
  * API Name : 사용자 개인정보 변경 API
- * [POST] /users/edit/:userId
+ * [POST] /users/edit/:userIdx
  */
 exports.editUserInfo = async function (req, res) {
   /**
-   * Path Variable: userId
+   * Path Variable: userIdx
    * body: nickname, password
    * jwt - userIdx
-   * Middleware: idx, nickname
    */
   const loggedInUserIdx = req.verifiedToken.userIdx;
-  const pageUserIdx = req.userIdx;
+  const pageUserIdx = parseInt(req.params.userIdx);
   const { nickname, password } = req.body;
 
+  // 빈 값 체크
+  if (!pageUserIdx) return res.send(errResponse(baseResponse.USERIDX_EMPTY));
+
   // 사용자 검증
-  if (!loggedInUserIdx == pageUserIdx) {
+  if (loggedInUserIdx != pageUserIdx) {
     return res.send(errResponse(baseResponse.USER_IDX_NOT_MATCH));
   }
 
