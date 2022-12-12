@@ -8,7 +8,7 @@ const { response, errResponse } = require("../../../config/response");
 const res = require("express/lib/response");
 
 exports.postDecoration = async function (
-  imageUrl,
+  imageIdx,
   nickname,
   message,
   userIdx,
@@ -31,7 +31,7 @@ exports.postDecoration = async function (
   const connection = await pool.getConnection(async (conn) => conn);
   try {
     const postDecorationInfoParams = [
-      imageUrl,
+      imageIdx,
       nickname,
       message,
       userIdx,

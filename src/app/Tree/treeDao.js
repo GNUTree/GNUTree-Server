@@ -1,7 +1,7 @@
 // 전체 장식품 조회
 async function selectDecorations(connection, userIdx) {
   const selectDecorationListQuery = `
-                SELECT idx, nickname, imageUrl
+                SELECT idx, nickname, imageIdx
                   FROM Decoration
                  WHERE userIdx = ? AND status = "NORMAL";
                 `;
@@ -15,7 +15,7 @@ async function selectDecorations(connection, userIdx) {
 
 async function selectDecoration(connection, decorationIdx) {
   const selectDecorationQuery = `
-                SELECT idx, nickname, writerIdx, imageUrl, message
+                SELECT idx, nickname, writerIdx, imageIdx, message
                   FROM Decoration
                  WHERE idx = ? AND status = "NORMAL";
                 `;
@@ -51,7 +51,7 @@ async function selectUserIdx(connection, userIdx) {
 
 async function insertDecoration(connection, postDecorationInfoParams) {
   const insertDecorationQuery = `
-                INSERT INTO Decoration (imageUrl, nickname, message, userIdx, writerIdx)
+                INSERT INTO Decoration (imageIdx, nickname, message, userIdx, writerIdx)
                  VALUE (?, ?, ?, ?, ?)
                 `;
   const insertDecorationRow = await connection.query(

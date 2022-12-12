@@ -6,7 +6,6 @@ const {
   errResponse,
   getDecorationResponse,
 } = require("../../../config/response");
-const { getDecorationImageUrl } = require("./decorationImageUrl");
 
 const treeDao = require("./treeDao");
 
@@ -16,11 +15,6 @@ exports.retrieveDecorationList = async function (userIdx, ownerNickname) {
   const decorationList = await treeDao.selectDecorations(connection, userIdx);
 
   connection.release();
-
-  // imageIdx -> imageUrl 변환
-  decorationList.forEach((decoration) => {
-    decoration.imageUrl = getDecorationImageUrl(parseInt(decoration.imageUrl));
-  });
 
   return getDecorationResponse(
     baseResponse.SUCCESS,
@@ -39,9 +33,6 @@ exports.retrieveDecoration = async function (decorationIdx) {
   if (!decoration) {
     return errResponse(baseResponse.DECORATION_NOT_EXIST);
   }
-
-  // imageIdx -> imageUrl 변환
-  decoration.imageUrl = getDecorationImageUrl(parseInt(decoration.imageUrl));
 
   return response(baseResponse.SUCCESS, decoration);
 };

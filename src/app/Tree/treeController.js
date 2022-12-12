@@ -59,11 +59,8 @@ exports.postDecoration = async function (req, res) {
     return res.send(errResponse(baseResponse.DECORATION_MESSAGE_TOO_LONG));
   }
 
-  //TODO: imageIdx -> ImageUrl 변경 로직 표직
-  const imageUrl = imageIdx;
-
   const postDecorationResponse = await treeService.postDecoration(
-    imageUrl,
+    imageIdx,
     nickname,
     message,
     userIdx,
