@@ -186,6 +186,13 @@ module.exports = {
     message: "decorationIdx를 입력해주세요.",
   },
 
+  DECORATION_CANNOT_OPEN: {
+    isSuccess: false,
+    code: 400,
+    message:
+      "크리스마스 메세지는 크라스마스 당일(12월 25일)에 열람 가능합니다.",
+  },
+
   DECORATION_NOT_EXIST: {
     isSuccess: false,
     code: 400,

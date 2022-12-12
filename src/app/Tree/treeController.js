@@ -77,6 +77,7 @@ exports.getDecoration = async function (req, res) {
   /**
    * Path Variable: userIdx, decorationIdx
    */
+  return res.send(errResponse(baseResponse.DECORATION_CANNOT_OPEN));
   const { decorationIdx } = req.params;
   const loggedInUserIdx = req.verifiedToken.userIdx;
   const treeUserIdx = req.userIdx;
