@@ -4,7 +4,8 @@
   "description": "Node.js API Server",
   "main": "index.js",
   "scripts": {
-    "dev:server": "nodemon index.js"
+    "dev:server": "nodemon index.js",
+    "start": "pm2 start index.js --watch --ignore-watch=`log/*` --no-daemon"
   },
   "author": "",
   "license": "ISC",
