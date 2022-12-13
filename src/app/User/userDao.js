@@ -107,6 +107,19 @@ async function updateUserPassword(connection, updateUserPasswordParams) {
 async function updateUserNickname(connection, params) {
   const updateUserNicknameQuery = `
                 UPDATE User
+                SET nickname = ?
+                WHERE idx = ?;
+                `;
+  const updateUserNicknameRow = await connection.query(
+    updateUserNicknameQuery,
+    params
+  );
+  return updateUserNicknameRow[0];
+}
+
+async function updateUserNicknamePassword(connection, params) {
+  const updateUserNicknameQuery = `
+                UPDATE User
                 SET nickname = ?, password = ?
                 WHERE idx = ?;
                 `;
@@ -128,4 +141,5 @@ module.exports = {
   updateUserInfo,
   updateUserPassword,
   updateUserNickname,
+  updateUserNicknamePassword,
 };

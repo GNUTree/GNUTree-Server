@@ -147,7 +147,7 @@ exports.editUserNicknamePassword = async function (
     await connection.beginTransaction();
     const hashedPassword = await bcrypt.hash(password, 10); // 비밀번호 암호화
     const infoParams = [nickname, hashedPassword, userIdx];
-    await userDao.updateUserNickname(connection, infoParams);
+    await userDao.updateUserNicknamePassword(connection, infoParams);
     await connection.commit();
     return response(baseResponse.SUCCESS);
   } catch (err) {
