@@ -17,7 +17,7 @@ exports.retrieveDecorationList = async function (userIdx, ownerNickname) {
   // 긴 닉네임 자르기
   decorationList.forEach((decoration) => {
     if (decoration.nickname.length > 5) {
-      decoration.nickname = decoration.nickname.substr(0, 5) + "...";
+      decoration.nickname = decoration.nickname.substr(0, 7) + "...";
     }
   });
   connection.release();
