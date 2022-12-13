@@ -33,9 +33,11 @@ exports.sendEmail = async function (req, res) {
 
   // cookie에 암호화 된 인증번호, 이메일 저장
   res.cookie("hashAuth", sendEmailResponse[1], {
+    sameSite: "none",
+    secure: true,
     maxAge: 300000,
   });
-  res.cookie("email", email);
+  res.cookie("email", email, { sameSite: "none", secure: true });
 
   return res.send(sendEmailResponse[0]);
 };
