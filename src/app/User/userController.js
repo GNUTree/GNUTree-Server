@@ -47,6 +47,7 @@ exports.postSignUp = async function (req, res) {
 
   // 쿠키 초기화
   res.clearCookie("email");
+  res.clearCookie("hashAuth");
 
   return res.send(signUpResponse);
 };
