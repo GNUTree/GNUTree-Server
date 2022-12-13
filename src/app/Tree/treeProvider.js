@@ -14,6 +14,12 @@ exports.retrieveDecorationList = async function (userIdx, ownerNickname) {
 
   const decorationList = await treeDao.selectDecorations(connection, userIdx);
 
+  // 긴 닉네임 자르기
+  decorationList.forEach((decoration) => {
+    if (decoration.nickname.length > 5) {
+      decoration.nickname = decoration.nickname.substr(0, 7) + "...";
+    }
+  });
   connection.release();
 
   return getDecorationResponse(
