@@ -35,10 +35,12 @@ exports.sendEmail = async function (req, res) {
   res.cookie("hashAuth", sendEmailResponse[1], {
     sameSite: "None",
     secure: true,
+    httpOnly: true,
     maxAge: 300000,
   });
   res.cookie("email", email, {
     sameSite: "None",
+    httpOnly: true,
     secure: true,
   });
 
