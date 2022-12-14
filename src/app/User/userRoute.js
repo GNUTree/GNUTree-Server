@@ -3,13 +3,13 @@ module.exports = function (app) {
   const jwtMiddleware = require("../../../config/jwtMiddleware");
 
   // 이메일 회원가입 API
-  app.post("/sign-up", user.postSignUp);
+  app.post("api/sign-up", user.postSignUp);
 
   // 이메일 로그인 API (jwt 생성)
-  app.post("/sign-in", user.login);
+  app.post("api/sign-in", user.login);
 
   // 비밀번호 재설정 API
-  app.post("/reset-password", user.resetPassword);
+  app.post("api/reset-password", user.resetPassword);
 
   // get: 회원 정보 관리 페이지
   // post: 사용자 개인정보 변경 API
